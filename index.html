@@ -1,0 +1,537 @@
+<title>Ruini Beauty Nest Website Demo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Hind+Madurai:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: near-black plum editorial bands with champagne-gold hairlines; ivory porcelain content sections; arched photo frames echo the bridal billboard. */
+:root{
+  --bg:#F7F1EC; --surface:#FFFDFB; --ink:#1A1020; --muted:#6C5F70; --line:#E7DACF;
+  --band:#12081A; --band-2:#1D1128; --on-band:#F7ECE5; --on-band-muted:#B9A9BF;
+  --rose:#8E1F4B; --rose-ink:#FFF4F7; --gold:#8F6A2C; --gold-bright:#E4C688;
+  --gold-grad:linear-gradient(120deg,#F4E2B2 0%,#D3A458 48%,#F0D6A0 100%);
+  --font-display:'Bodoni Moda','Hind Madurai',Georgia,serif;
+  --font-body:'Jost','Hind Madurai','Noto Sans Tamil',system-ui,sans-serif;
+  --shadow:0 30px 60px -34px rgba(26,16,32,.55);
+  --hair:rgba(228,198,136,.28);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D0712; --surface:#190F22; --ink:#F6EBE3; --muted:#B4A4B9; --line:#2D1F37;
+  --band:#08040C; --band-2:#140B1C; --rose:#E8A3BA; --rose-ink:#2A0A18; --gold:#D9B56E;
+  --shadow:0 30px 60px -34px rgba(0,0,0,.9); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D0712; --surface:#190F22; --ink:#F6EBE3; --muted:#B4A4B9; --line:#2D1F37;
+  --band:#08040C; --band-2:#140B1C; --rose:#E8A3BA; --rose-ink:#2A0A18; --gold:#D9B56E;
+  --shadow:0 30px 60px -34px rgba(0,0,0,.9); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--font-body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--band)}
+body::after{content:"";position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+h1,h2,h3{font-family:var(--font-display);font-weight:500;line-height:1.06;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1180px;margin-inline:auto}
+.band{margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px));background:var(--band);color:var(--on-band)}
+section{padding-block:clamp(64px,10vw,120px)}
+.eyebrow{display:flex;align-items:center;gap:14px;font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:18px}
+.eyebrow::before{content:"";width:42px;height:1px;background:currentColor;opacity:.7}
+.band .eyebrow{color:var(--gold-bright)}
+h2{font-size:clamp(2.1rem,4.8vw,3.5rem)}
+.lead{color:var(--muted);max-width:54ch;margin-top:16px;font-weight:300;font-size:1.06rem}
+.band .lead{color:var(--on-band-muted)}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:999px;padding:14px 30px;font-weight:500;letter-spacing:.06em;font-size:.92rem;text-transform:uppercase;cursor:pointer;text-decoration:none;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,filter .35s}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-120%);transition:transform .8s}
+.btn:hover::after{transform:translateX(120%)}
+.btn-primary{background:var(--rose);color:var(--rose-ink)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 18px 30px -14px var(--rose)}
+.btn-ghost{background:transparent;border:1px solid var(--hair);color:var(--on-band)}
+.btn-ghost:hover{border-color:var(--gold-bright);transform:translateY(-3px)}
+.btn-gold{background:var(--gold-grad);color:#1A1020}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 18px 34px -14px #D3A458}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:12px max(16px,env(safe-area-inset-left,0px));background:color-mix(in srgb,var(--band) 82%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);color:var(--on-band);border-bottom:1px solid var(--hair)}
+.nav{display:flex;align-items:center;gap:18px;max-width:1180px;margin-inline:auto}
+.logo{font-family:var(--font-display);font-size:1.3rem;font-weight:500;text-decoration:none;display:flex;align-items:center;gap:12px;white-space:nowrap;letter-spacing:.02em}
+.logo i{width:26px;height:26px;border-radius:50%;background:var(--gold-grad);display:inline-block;box-shadow:inset -5px -4px 0 rgba(18,8,26,.35)}
+.nav ul{display:flex;gap:2px;list-style:none;margin:0 0 0 auto;padding:0}
+.nav ul a{display:block;padding:8px 14px;text-decoration:none;font-weight:400;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--on-band-muted);position:relative;transition:color .25s}
+.nav ul a::after{content:"";position:absolute;left:14px;right:14px;bottom:3px;height:1px;background:var(--gold-bright);transform:scaleX(0);transition:transform .35s}
+.nav ul a:hover,.nav ul a.on{color:#fff}
+.nav ul a:hover::after,.nav ul a.on::after{transform:scaleX(1)}
+.tools{display:flex;gap:8px}
+.pill{background:transparent;border:1px solid var(--hair);color:var(--on-band);border-radius:999px;padding:6px 14px;cursor:pointer;font-size:.8rem;letter-spacing:.06em;font-weight:500;transition:.25s}
+.pill:hover{border-color:var(--gold-bright);color:var(--gold-bright)}
+@media(max-width:900px){.nav ul{display:none}.nav .tools{margin-left:auto}.logo{font-size:1.1rem}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding-block:clamp(48px,8vw,100px) clamp(64px,9vw,112px);background:radial-gradient(900px 520px at 78% 30%,rgba(142,31,75,.38),transparent 70%),radial-gradient(700px 400px at 5% 90%,rgba(211,164,88,.12),transparent 70%),var(--band)}
+#sparkle{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,6vw,80px);align-items:center}
+.hero h1{font-size:clamp(2.8rem,7.2vw,5.6rem);margin-top:4px;font-weight:500}
+.swap{display:inline-block;font-style:italic;position:relative}
+.swap span{display:inline-block;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;padding-right:.06em;animation:swapin .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes swapin{from{transform:translateY(45%);opacity:0;filter:blur(6px)}to{transform:none;opacity:1;filter:none}}
+.hero .lead{font-size:1.14rem;margin-block:22px 34px}
+.hero .ta{font-size:1.02rem;color:var(--gold-bright);margin-bottom:10px;font-weight:400}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px}
+.stats{display:flex;gap:clamp(22px,4vw,48px);flex-wrap:wrap;margin-top:44px;padding-top:26px;border-top:1px solid var(--hair)}
+.stats b{display:block;font-family:var(--font-display);font-weight:500;font-size:2.3rem;line-height:1;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;font-variant-numeric:tabular-nums}
+.stats small{color:var(--on-band-muted);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase}
+.arch{position:relative;justify-self:center;width:min(100%,420px);transform:perspective(1000px) rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg));transition:transform .25s ease-out}
+.arch::before{content:"";position:absolute;inset:-14px;border-radius:999px 999px 34px 34px;border:1px solid var(--hair)}
+.arch .frame{border-radius:999px 999px 24px 24px;overflow:hidden;aspect-ratio:3/4.1;box-shadow:0 50px 80px -40px #000,0 0 0 1px var(--hair);animation:rise 1.2s cubic-bezier(.2,.8,.2,1) both;position:relative}
+.arch .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(8,4,12,.55))}
+.arch .frame img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;transform:scale(1.12);animation:slow 16s ease-in-out infinite alternate}
+@keyframes rise{from{transform:translateY(50px);opacity:.2}to{transform:none;opacity:1}}
+@keyframes slow{to{transform:scale(1.22) translateY(-2%)}}
+.float{position:absolute;background:color-mix(in srgb,var(--band-2) 78%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:var(--on-band);border:1px solid var(--hair);border-radius:16px;padding:12px 18px;box-shadow:0 20px 40px -20px #000;font-family:var(--font-display);font-size:1.02rem;animation:bob 6s ease-in-out infinite}
+.float small{display:block;color:var(--gold-bright);font-family:var(--font-body);font-weight:400;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;margin-top:2px}
+.f1{left:-10%;top:16%}.f2{right:-8%;bottom:12%;animation-delay:-3s}
+@keyframes bob{50%{transform:translateY(-10px)}}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.arch{order:-1;width:min(76%,320px)}.f1{left:-8%}.f2{right:-8%}}
+
+/* marquee */
+.marquee{margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));background:var(--band);color:var(--gold-bright);overflow:hidden;white-space:nowrap;padding:16px 0;font-family:var(--font-display);font-style:italic;font-size:1.1rem;border-block:1px solid var(--hair)}
+.marquee div{display:inline-block;animation:run 38s linear infinite;padding-left:100%}
+.marquee span{margin-inline:22px}
+.marquee span::after{content:"º6";margin-left:44px;font-style:normal;font-size:.7rem;opacity:.7}
+@keyframes run{to{transform:translateX(-100%)}}
+.marquee:hover div{animation-play-state:paused}
+
+/* offers */
+.cd{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.cd div{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--hair);border-radius:14px;padding:14px 8px 10px;min-width:84px;text-align:center}
+.cd b{display:block;font-family:var(--font-display);font-weight:500;font-size:2.3rem;line-height:1;font-variant-numeric:tabular-nums;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.cd small{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--on-band-muted)}
+.offers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:46px}
+.offer{position:relative;border-radius:200px 200px 20px 20px;overflow:hidden;background:var(--band-2);border:1px solid var(--hair);transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .4s}
+.offer:hover{transform:translateY(-10px);border-color:var(--gold-bright)}
+.offer img{width:100%;aspect-ratio:4/4.1;object-fit:cover;object-position:50% 12%;display:block;transition:transform 1s}
+.offer:hover img{transform:scale(1.08)}
+.offer::before{content:"";position:absolute;left:0;right:0;top:0;aspect-ratio:4/4.1;background:linear-gradient(180deg,transparent 55%,var(--band-2));z-index:1;pointer-events:none}
+.offer .tag{position:absolute;left:50%;top:calc((100% - 100px)*.45);transform:translateX(-50%);z-index:2;background:var(--gold-grad);color:#1A1020;border-radius:999px;padding:6px 20px;font-family:var(--font-display);font-weight:500;font-size:1.5rem;box-shadow:0 14px 30px -10px #000;white-space:nowrap;display:none}
+.offer h3{position:relative;z-index:2;font-size:1.5rem;padding:4px 24px 4px;margin-top:-50px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.offer h3::after{content:attr(data-price);font-style:italic;font-size:1.7rem;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;white-space:nowrap}
+.offer p{padding:6px 24px 26px;color:var(--on-band-muted);font-size:.95rem;font-weight:300}
+@media(max-width:900px){.offers{grid-template-columns:1fr;max-width:420px;margin-inline:auto}}
+
+/* services */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-block:30px 30px}
+.tab{background:transparent;border:1px solid var(--line);border-radius:999px;padding:9px 22px;cursor:pointer;font-weight:400;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:.3s}
+.tab:hover{border-color:var(--gold);color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--band);border-color:var(--band);color:var(--gold-bright)}
+.svc{position:relative;display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(22px,4vw,56px);align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:30px;padding:clamp(14px,2.4vw,28px);box-shadow:var(--shadow);overflow:hidden}
+.svc .ph{border-radius:200px 200px 22px 22px;overflow:hidden;aspect-ratio:4/4.6}
+.svc .ph img{width:100%;height:100%;object-fit:cover;animation:fade .7s}
+@keyframes fade{from{opacity:0;transform:scale(1.06)}to{opacity:1;transform:none}}
+.svc h3{font-size:2.3rem;margin-bottom:6px}
+.svc ul{list-style:none;padding:0;margin:22px 0 26px;display:grid;gap:0}
+.svc li{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.svc li::before{content:"º6";color:var(--gold);font-size:.7rem;flex:none}
+.svc li em{margin-left:auto;font-style:italic;color:var(--muted);font-size:.9rem;white-space:nowrap;font-family:var(--font-display)}
+.note{font-size:.82rem;color:var(--muted);margin-top:20px;letter-spacing:.02em}
+@media(max-width:900px){.svc{grid-template-columns:1fr}}
+
+/* spotlight */
+.card::after,.offer::after,.svc::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s;background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),rgba(228,198,136,.17),transparent 62%);z-index:3}
+.card:hover::after,.offer:hover::after,.svc:hover::after{opacity:1}
+
+/* shop */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-block:28px 36px}
+.shop{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:24px}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .4s;animation:fade .6s both}
+.card:hover{transform:translateY(-8px);border-color:var(--gold)}
+.card .im{position:relative;aspect-ratio:1/1.08;overflow:hidden;cursor:zoom-in;border:0;padding:0;background:var(--line);display:block;width:100%}
+.card .im img{width:100%;height:100%;object-fit:cover;transition:transform 1s}
+.card:hover .im img{transform:scale(1.1)}
+.card .im span{position:absolute;left:14px;top:14px;background:color-mix(in srgb,var(--band) 75%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--gold-bright);border-radius:999px;padding:4px 14px;font-size:.68rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase}
+.card .tx{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card h3{font-size:1.2rem}
+.card p{color:var(--muted);font-size:.9rem;font-weight:300}
+.card .add{margin-top:auto;align-self:flex-start;background:transparent;border:1px solid var(--gold);color:var(--ink);border-radius:999px;padding:8px 18px;font-weight:500;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:.3s}
+.card .add:hover{background:var(--band);color:var(--gold-bright);border-color:var(--band)}
+.card .add.in{background:var(--rose);color:var(--rose-ink);border-color:var(--rose)}
+.enq{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translate(-50%,160%);z-index:55;background:color-mix(in srgb,var(--band) 90%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);color:var(--on-band);border:1px solid var(--gold-bright);border-radius:999px;padding:8px 8px 8px 24px;display:flex;align-items:center;gap:16px;box-shadow:0 24px 50px -14px #000;transition:transform .6s cubic-bezier(.2,.8,.2,1);max-width:calc(100% - 32px)}
+.enq.show{transform:translate(-50%,0)}
+.enq b{color:var(--gold-bright);font-family:var(--font-display);font-size:1.2rem}
+
+/* booking */
+.book{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,6vw,80px);align-items:start}
+.form{background:var(--surface);color:var(--ink);border:1px solid var(--hair);border-radius:28px;padding:clamp(20px,3vw,36px);display:grid;gap:20px;box-shadow:0 40px 80px -40px #000}
+.form label,.form .fl{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:500;display:block;margin-bottom:8px}
+.form input,.form select{width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:var(--bg);min-height:50px;transition:border-color .25s}
+.form input:focus,.form select:focus{border-color:var(--gold);outline:none}
+.slots{display:flex;flex-wrap:wrap;gap:8px}
+.slot{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:9px 16px;cursor:pointer;font-weight:400;font-size:.88rem;font-variant-numeric:tabular-nums;transition:.25s}
+.slot:hover{border-color:var(--gold)}
+.slot[aria-pressed="true"]{background:var(--band);color:var(--gold-bright);border-color:var(--band)}
+.sum{background:var(--bg);border-radius:16px;padding:16px 18px;font-size:.95rem;border:1px dashed var(--gold)}
+.sum b{font-family:var(--font-display);font-size:1.25rem;font-weight:500}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.perks{list-style:none;padding:0;margin:34px 0 0;display:grid;gap:22px}
+.perks li{display:flex;gap:16px;align-items:flex-start}
+.perks i{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--gold-bright);color:var(--gold-bright);display:grid;place-items:center;font-style:italic;font-family:var(--font-display);font-size:1.2rem}
+.perks b{display:block;font-family:var(--font-display);font-weight:500;font-size:1.15rem}
+.perks span{color:var(--on-band-muted);font-size:.95rem;font-weight:300}
+@media(max-width:900px){.book{grid-template-columns:1fr}.row2{grid-template-columns:1fr}}
+
+/* tour strip */
+.strip{display:flex;gap:18px;overflow-x:auto;padding-block:34px 14px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.strip button{flex:none;width:min(62vw,260px);aspect-ratio:3/4.2;border-radius:200px 200px 18px 18px;overflow:hidden;border:1px solid var(--line);padding:0;cursor:zoom-in;scroll-snap-align:start;background:var(--line);transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .3s}
+.strip button:nth-child(even){border-radius:18px 18px 200px 200px;margin-top:24px}
+.strip button:hover{transform:translateY(-8px);border-color:var(--gold)}
+.strip img{width:100%;height:100%;object-fit:cover}
+
+/* contact */
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px);align-items:center}
+.visit .ph{border-radius:200px 200px 24px 24px;overflow:hidden;aspect-ratio:4/4.6;box-shadow:var(--shadow)}
+.visit .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 38%}
+.info{display:grid;gap:12px;margin-top:28px}
+.info div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.info small{display:block;color:var(--muted);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase}
+.info b{font-family:var(--font-display);font-weight:500;font-size:1.25rem;font-variant-numeric:tabular-nums}
+.copy{margin-left:auto;border:1px solid var(--gold);background:transparent;border-radius:999px;padding:6px 16px;cursor:pointer;font-weight:500;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+.copy:hover{background:var(--band);color:var(--gold-bright)}
+@media(max-width:900px){.visit{grid-template-columns:1fr}}
+footer{padding-block:56px;text-align:center;border-top:1px solid var(--hair)}
+footer p{color:var(--on-band-muted);font-size:.85rem;font-weight:300}
+footer .logo{justify-content:center;margin-bottom:12px;font-size:1.7rem}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:100;background:rgba(6,3,10,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:grid;place-items:center;padding:24px}
+.lightbox[hidden]{display:none!important}
+.lightbox img{max-width:min(92vw,520px);max-height:84vh;border-radius:200px 200px 20px 20px;border:1px solid var(--hair);box-shadow:0 40px 100px #000;animation:fade .4s}
+.lightbox button{position:absolute;right:max(16px,env(safe-area-inset-right,0px));top:calc(16px + env(safe-area-inset-top,0px));background:transparent;color:var(--gold-bright);border:1px solid var(--hair);border-radius:50%;width:46px;height:46px;font-size:1.5rem;cursor:pointer}
+
+.rv{transform:translateY(30px);transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.rv.in{transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{transform:none}html{scroll-behavior:auto}.arch{transform:none}}
+</style>
+
+<header class="top"><div class="nav">
+  <a class="logo" href="#home"><i></i>Ruini Beauty Nest</a>
+  <ul id="menu">
+    <li><a href="#home" data-i="nav_home">Home</a></li>
+    <li><a href="#offers" data-i="nav_offers">Offers</a></li>
+    <li><a href="#services" data-i="nav_services">Services</a></li>
+    <li><a href="#shop" data-i="nav_shop">Shop</a></li>
+    <li><a href="#book" data-i="nav_book">Book</a></li>
+    <li><a href="#visit" data-i="nav_visit">Visit</a></li>
+  </ul>
+  <div class="tools">
+    <button class="pill" id="lang" aria-label="Switch language">தமிழ்</button>
+    <button class="pill" id="theme" aria-label="Switch light or dark theme">Dark</button>
+  </div>
+</div></header>
+
+<main id="home">
+<div class="band hero"><div class="wrap">
+  <canvas id="sparkle" aria-hidden="true"></canvas>
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow" data-i="eyebrow">Now open · Salon · Makeup · Store</div>
+      <p class="ta" data-i="ta">அழகு, அலங்காரம், அனைத்தும் ஒரே இடத்தில்</p>
+      <h1><span data-i="h1a">Look your best for</span> <span class="swap" id="swap"><span>brides</span></span></h1>
+      <p class="lead" data-i="lead">Bridal makeup, hair, skin and threading, plus a full beauty and fashion store, under one roof. Book in two taps on WhatsApp.</p>
+      <div class="cta-row">
+        <a class="btn btn-gold" href="#book" data-i="cta1">Book an appointment</a>
+        <a class="btn btn-ghost" href="#shop" data-i="cta2">Browse the store</a>
+      </div>
+      <div class="stats">
+        <div><b data-count="9">0</b><small data-i="s1">store categories</small></div>
+        <div><b data-count="3">0</b><small data-i="s2">launch days</small></div>
+        <div><b>Rs 29</b><small data-i="s3">threading offer</small></div>
+      </div>
+    </div>
+    <div class="arch">
+      <div class="frame"><img src="hero.jpg" alt="Ruini Beauty Nest bridal makeup billboard"></div>
+      <div class="float f1">Bridal makeup<small>Hair · Skin · Mehndi</small></div>
+      <div class="float f2">Half price<small>Hair treatment, launch week</small></div>
+    </div>
+  </div>
+</div></div>
+
+<div class="marquee" aria-hidden="true"><div>
+  <span>LAUNCH OFFER · 24, 25 &amp; 26 OCTOBER</span><span>THREADING RS 29</span><span>SAREE SERVICE RS 99</span><span>50% OFF HAIR TREATMENT</span><span>BRIDAL MAKEUP</span><span>BEAUTY · FASHION · JEWELLERY</span><span>LAUNCH OFFER · 24, 25 &amp; 26 OCTOBER</span><span>THREADING RS 29</span><span>SAREE SERVICE RS 99</span><span>50% OFF HAIR TREATMENT</span>
+</div></div>
+
+<section id="offers" class="band"><div class="wrap">
+  <div class="eyebrow" data-i="o_eb">Grand opening</div>
+  <h2 data-i="o_h">Three days, three reasons to visit</h2>
+  <p class="lead" data-i="o_p">Launch prices run on 24, 25 and 26 October only.</p>
+  <div class="cd" id="cd" aria-live="off"></div>
+  <div class="offers">
+    <article class="offer rv"><img src="thread.jpg" alt="Eyebrow threading"><h3 data-price="Rs 29"><span data-i="o1">Threading</span></h3><p data-i="o1p">Clean, quick eyebrow and face threading.</p></article>
+    <article class="offer rv"><img src="saree.jpg" alt="Saree pleating"><h3 data-price="Rs 99"><span data-i="o2">Saree service</span></h3><p data-i="o2p">Neat pleats and perfect draping before the function.</p></article>
+    <article class="offer rv"><img src="hair.jpg" alt="Hair straightening"><h3 data-price="Half price"><span data-i="o3">Hair treatment</span></h3><p data-i="o3p">Half price on hair straightening during launch week.</p></article>
+  </div>
+</div></section>
+
+<section id="services"><div class="wrap">
+  <div class="eyebrow" data-i="sv_eb">What we do</div>
+  <h2 data-i="sv_h">Salon services</h2>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div class="svc rv" id="svc"></div>
+  <p class="note">Demo content. Final service list and prices will come from the salon.</p>
+</div></section>
+
+<section id="shop" style="padding-top:0"><div class="wrap">
+  <div class="eyebrow" data-i="sh_eb">The store</div>
+  <h2 data-i="sh_h">Beauty, fashion and gifts on every shelf</h2>
+  <p class="lead" data-i="sh_p">Tap Add to enquiry on anything you like, then send the list to the shop on WhatsApp.</p>
+  <div class="chips tabs" id="chips"></div>
+  <div class="shop" id="shop-grid"></div>
+</div></section>
+
+<section id="book" class="band"><div class="wrap book">
+  <div>
+    <div class="eyebrow" data-i="b_eb">Appointments</div>
+    <h2 data-i="b_h">Pick a service and a time. We confirm on WhatsApp.</h2>
+    <ul class="perks">
+      <li><i>1</i><div><b>Choose</b><span>Select a service, a date and a slot.</span></div></li>
+      <li><i>2</i><div><b>Send</b><span>Your details open in WhatsApp, ready to send.</span></div></li>
+      <li><i>3</i><div><b>Arrive</b><span>The team confirms your time and gets ready for you.</span></div></li>
+    </ul>
+  </div>
+  <form class="form" id="form" autocomplete="off">
+    <div><label for="f-svc">Service</label>
+      <select id="f-svc"></select></div>
+    <div class="row2">
+      <div><label for="f-date">Date</label><input type="date" id="f-date"></div>
+      <div><label for="f-name">Your name</label><input type="text" id="f-name" placeholder="Priya"></div>
+    </div>
+    <div><span class="fl">Time</span><div class="slots" id="slots"></div></div>
+    <div class="sum" id="sum">Choose a service, date and time to see your summary.</div>
+    <a class="btn btn-primary" id="send" href="#book" target="_blank" rel="noopener">Open in WhatsApp</a>
+  </form>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow" data-i="t_eb">Inside Ruini</div>
+  <h2 data-i="t_h">A look around the shop</h2>
+  <div class="strip" id="strip"></div>
+</div></section>
+
+<section id="visit" style="padding-top:0"><div class="wrap visit">
+  <div class="ph rv"><img src="facade.jpg" alt="Ruini Beauty Nest building"></div>
+  <div>
+    <div class="eyebrow" data-i="v_eb">Visit us</div>
+    <h2 data-i="v_h">Come in for a look. Stay for the makeover.</h2>
+    <div class="info">
+      <div><span><small>Phone and WhatsApp</small><b id="ph">77082 97473</b></span><button class="copy" id="copyph" type="button">Copy</button></div>
+      <div><span><small>Instagram</small><b><a href="https://www.instagram.com/ruini_makeover_artist" target="_blank" rel="noopener">@ruini_makeover_artist</a></b></span></div>
+      <div><span><small>Address and hours</small><b>To be added by the salon</b></span></div>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer class="band"><div class="wrap">
+  <div class="logo"><i></i>Ruini Beauty Nest</div>
+  <p>Website demo concept built from the salon's launch video. Images are frames from that video.</p>
+</div></footer>
+
+<div class="enq" id="enq"><span><b id="enq-n">0</b> items in your enquiry</span><a class="btn btn-gold" id="enq-send" href="#shop" target="_blank" rel="noopener">Send on WhatsApp</a></div>
+<div class="lightbox" id="lb" hidden><button id="lb-x" aria-label="Close">&times;</button><img id="lb-img" alt=""></div>
+
+<script>
+(function(){
+var WA='917708297473';
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function safe(f){try{return f()}catch(e){return null}}
+
+/* ---------- language ---------- */
+var T={
+ nav_home:['Home','முகப்பு'],nav_offers:['Offers','சலுகைகள்'],nav_services:['Services','சேவைகள்'],nav_shop:['Shop','கடை'],nav_book:['Book','முன்பதிவு'],nav_visit:['Visit','தொடர்பு'],
+ eyebrow:['Now open · Salon · Makeup · Store','இப்போது திறந்துள்ளது · சலூன் · மேக்கப் · கடை'],
+ ta:['அழகு, அலங்காரம், அனைத்தும் ஒரே இடத்தில்','Beauty and styling, everything in one place'],
+ h1a:['Look your best for','அழகாக ஜொலிக்க'],
+ lead:['Bridal makeup, hair, skin and threading, plus a full beauty and fashion store, under one roof. Book in two taps on WhatsApp.','மணப்பெண் மேக்கப், முடி, சருமம், த்ரெடிங் மற்றும் முழு அழகு, ஃபேஷன் கடை ஒரே இடத்தில். WhatsApp-ல் எளிதாக முன்பதிவு செய்யுங்கள்.'],
+ cta1:['Book an appointment','முன்பதிவு செய்ய'],cta2:['Browse the store','கடையைப் பாருங்கள்'],
+ s1:['store categories','கடை வகைகள்'],s2:['launch days','திறப்பு நாட்கள்'],s3:['threading offer','த்ரெடிங் சலுகை'],
+ o_eb:['Grand opening','பிரம்மாண்ட திறப்பு விழா'],o_h:['Three days, three reasons to visit','மூன்று நாட்கள், மூன்று சலுகைகள்'],o_p:['Launch prices run on 24, 25 and 26 October only.','அக்டோபர் 24, 25, 26 தேதிகளில் மட்டும்.'],
+ o1:['Threading','த்ரெடிங்'],o1p:['Clean, quick eyebrow and face threading.','சுத்தமாக, விரைவாக புருவம் மற்றும் முக த்ரெடிங்.'],
+ o2:['Saree service','புடவை சேவை'],o2p:['Neat pleats and perfect draping before the function.','விழாவுக்கு முன் அழகான கொசுவம் மற்றும் புடவை கட்டுதல்.'],
+ o3:['Hair treatment','முடி சிகிச்சை'],o3p:['Half price on hair straightening during launch week.','திறப்பு வாரத்தில் முடி ஸ்ட்ரெய்ட்டனிங் பாதி விலையில்.'],
+ sv_eb:['What we do','எங்கள் சேவைகள்'],sv_h:['Salon services','சலூன் சேவைகள்'],
+ sh_eb:['The store','எங்கள் கடை'],sh_h:['Beauty, fashion and gifts on every shelf','ஒவ்வொரு அலமாரியிலும் அழகு, ஃபேஷன், பரிசுகள்'],sh_p:['Tap Add to enquiry on anything you like, then send the list to the shop on WhatsApp.','பிடித்ததில் Add to enquiry தட்டி, பட்டியலை WhatsApp-ல் கடைக்கு அனுப்புங்கள்.'],
+ b_eb:['Appointments','முன்பதிவு'],b_h:['Pick a service and a time. We confirm on WhatsApp.','சேவையும் நேரமும் தேர்வு செய்யுங்கள். WhatsApp-ல் உறுதி செய்வோம்.'],
+ t_eb:['Inside Ruini','ருயினி உள்ளே'],t_h:['A look around the shop','கடையை சுற்றிப் பாருங்கள்'],
+ v_eb:['Visit us','எங்களை சந்திக்க'],v_h:['Come in for a look. Stay for the makeover.','வந்து பாருங்கள். அழகாக மாறுங்கள்.']
+};
+var lang=0;
+function applyLang(){
+  $$('[data-i]').forEach(function(el){var k=el.getAttribute('data-i');if(T[k])el.textContent=T[k][lang]});
+  $('#lang').textContent=lang?'English':'தமிழ்';
+  document.documentElement.lang=lang?'ta':'en';
+}
+$('#lang').onclick=function(){lang=lang?0:1;applyLang();swapNow()};
+
+/* ---------- theme ---------- */
+var root=document.documentElement;
+function isDark(){var t=root.getAttribute('data-theme');return t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
+function themeLabel(){$('#theme').textContent=isDark()?'Light':'Dark'}
+$('#theme').onclick=function(){root.setAttribute('data-theme',isDark()?'light':'dark');themeLabel()};
+themeLabel();
+
+/* ---------- rotating word ---------- */
+var words=['brides','weddings','festivals','every day','Diwali'];var wi=0;
+function swapNow(){var s=$('#swap');s.innerHTML='<span>'+words[wi]+'</span>'}
+setInterval(function(){wi=(wi+1)%words.length;swapNow()},2200);
+
+/* ---------- count up ---------- */
+$$('[data-count]').forEach(function(el){
+  var to=+el.getAttribute('data-count'),n=0,id=setInterval(function(){n++;el.textContent=n;if(n>=to)clearInterval(id)},140);
+});
+
+/* ---------- sparkle canvas ---------- */
+(function(){
+  var c=$('#sparkle'),x=c.getContext('2d'),P=[],W,H;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  function size(){var r=c.getBoundingClientRect();W=c.width=r.width;H=c.height=r.height}
+  size();addEventListener('resize',size);
+  for(var i=0;i<46;i++)P.push({x:Math.random(),y:Math.random(),r:Math.random()*2.2+.6,v:Math.random()*.25+.08,p:Math.random()*6});
+  function draw(t){
+    x.clearRect(0,0,W,H);
+    P.forEach(function(p){
+      p.y-=p.v/300;if(p.y<-.02){p.y=1.02;p.x=Math.random()}
+      var a=.25+.5*Math.abs(Math.sin(t/900+p.p));
+      x.globalAlpha=a;x.fillStyle='#F2C14E';
+      var px=p.x*W,py=p.y*H,r=p.r*2.4;
+      x.beginPath();x.moveTo(px,py-r);x.quadraticCurveTo(px,py,px+r,py);x.quadraticCurveTo(px,py,px,py+r);x.quadraticCurveTo(px,py,px-r,py);x.quadraticCurveTo(px,py,px,py-r);x.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+/* ---------- countdown to end of 26 Oct 2026 (IST) ---------- */
+(function(){
+  var end=new Date('2026-10-26T23:59:59+05:30').getTime(),box=$('#cd');
+  function pad(n){return n<10?'0'+n:''+n}
+  function tick(){
+    var d=end-Date.now();
+    if(d<=0){box.innerHTML='<div style="min-width:0;padding:12px 20px"><small>Launch offer ended. Ask the shop for current prices.</small></div>';return}
+    var s=Math.floor(d/1000);
+    var parts=[['Days',Math.floor(s/86400)],['Hours',Math.floor(s%86400/3600)],['Min',Math.floor(s%3600/60)],['Sec',s%60]];
+    box.innerHTML=parts.map(function(p){return '<div><b>'+pad(p[1])+'</b><small>'+p[0]+'</small></div>'}).join('');
+  }
+  tick();setInterval(tick,1000);
+})();
+
+/* ---------- services ---------- */
+var SV={
+ Bridal:{img:'bride.jpg',pos:'50% 30%',t:'Bridal makeup',d:'Your wedding look, planned with you. Makeup, hair and draping finished together so the whole look stays fresh through the ceremony.',l:['Bridal makeup','Reception makeup','Engagement and party makeup','Hair styling and draping']},
+ Hair:{img:'hair.jpg',pos:'50% 20%',t:'Hair care',d:'Smooth, shiny, healthy. Straightening, styling and everyday hair care with salon tools.',l:['Hair straightening','Haircut and styling','Hair spa','Colour and touch-up']},
+ Skin:{img:'neon.jpg',pos:'50% 40%',t:'Skin and facials',d:'A calm treatment room with modern facial machines and an LED mask for glowing skin.',l:['Facials','LED mask treatment','Clean-up','De-tan']},
+ Threading:{img:'thread.jpg',pos:'50% 15%',t:'Threading and grooming',d:'Quick and precise. The most popular service at launch, at a launch price.',l:['Eyebrow threading','Face threading','Waxing','Manicure and pedicure']},
+ Saree:{img:'saree.jpg',pos:'50% 15%',t:'Saree draping',d:'Crisp pleats and a perfect fall, done in minutes before any function.',l:['Saree pleating','Saree draping','Pre-pleating for travel','Dupatta setting']}
+};
+var tabs=$('#tabs'),svcSel=$('#f-svc');
+Object.keys(SV).forEach(function(k,i){
+  var b=document.createElement('button');b.className='tab';b.type='button';b.setAttribute('role','tab');b.textContent=k;b.setAttribute('aria-selected',i===0);
+  b.onclick=function(){showSvc(k)};tabs.appendChild(b);
+  var o=document.createElement('option');o.value=SV[k].t;o.textContent=SV[k].t;svcSel.appendChild(o);
+});
+function showSvc(k){
+  $$('.tab',tabs).forEach(function(b){b.setAttribute('aria-selected',b.textContent===k)});
+  var s=SV[k];
+  $('#svc').innerHTML='<div class="ph"><img src="'+s.img+'" style="object-position:'+s.pos+'" alt="'+s.t+'"></div><div><h3>'+s.t+'</h3><p class="lead" style="color:var(--muted)">'+s.d+'</p><ul>'+s.l.map(function(x){return '<li>'+x+'<em>Ask for price</em></li>'}).join('')+'</ul><button class="btn btn-primary" type="button" data-pick="'+s.t+'">Book '+s.t.toLowerCase()+'</button></div>';
+  $('[data-pick]').onclick=function(){svcSel.value=this.getAttribute('data-pick');upd();$('#book').scrollIntoView({behavior:'smooth'})};
+}
+showSvc('Bridal');
+
+/* ---------- shop ---------- */
+var ITEMS=[
+ {c:'Skin',img:'masks.jpg',t:'Korean sheet masks and face packs',d:'Glass-skin masks, blackhead strips and more.'},
+ {c:'Hair',img:'serum.jpg',t:'Hair serums and oils',d:'Shine, repair and daily care for every hair type.'},
+ {c:'Hair',img:'hairc.jpg',t:'Shampoos and hair care',d:'Herbal and salon-style ranges, all on one wall.'},
+ {c:'Makeup',img:'nails.jpg',t:'Press-on nail art',d:'Ready-to-wear nail sets in new designs.'},
+ {c:'Makeup',img:'polish.jpg',t:'Nail polish and lip colours',d:'Hundreds of shades to pick and match.'},
+ {c:'Fragrance',img:'perfume.jpg',t:'Perfumes and gift sets',d:'Body mists, attars and boxed sets for gifting.'},
+ {c:'Jewellery',img:'neck.jpg',t:'Necklace sets',d:'Gold-look temple and stone sets for festivals and weddings.'},
+ {c:'Jewellery',img:'bangle.jpg',t:'Bangles and jhumkas',d:'Stacks of bangles in every colour.'},
+ {c:'Footwear',img:'shoe.jpg',t:'Comfort sneakers',d:'Light, slip-on everyday shoes.'}
+];
+var cats=['All'].concat(ITEMS.reduce(function(a,i){if(a.indexOf(i.c)<0)a.push(i.c);return a},[]));
+var cur='All',sel={};
+var chips=$('#chips');
+cats.forEach(function(c){var b=document.createElement('button');b.className='tab';b.type='button';b.textContent=c;b.setAttribute('aria-selected',c==='All');b.onclick=function(){cur=c;$$('.tab',chips).forEach(function(x){x.setAttribute('aria-selected',x===b)});renderShop()};chips.appendChild(b)});
+function renderShop(){
+  var g=$('#shop-grid');g.innerHTML='';
+  ITEMS.filter(function(i){return cur==='All'||i.c===cur}).forEach(function(i,n){
+    var el=document.createElement('article');el.className='card';el.style.animationDelay=(n*60)+'ms';
+    el.innerHTML='<button class="im" type="button" aria-label="Enlarge '+i.t+'"><img src="'+i.img+'" alt="'+i.t+'"><span>'+i.c+'</span></button><div class="tx"><h3>'+i.t+'</h3><p>'+i.d+'</p><button class="add'+(sel[i.t]?' in':'')+'" type="button">'+(sel[i.t]?'Added':'Add to enquiry')+'</button></div>';
+    $('.im',el).onclick=function(){openLb(i.img,i.t)};
+    $('.add',el).onclick=function(){if(sel[i.t])delete sel[i.t];else sel[i.t]=1;this.classList.toggle('in',!!sel[i.t]);this.textContent=sel[i.t]?'Added':'Add to enquiry';updEnq()};
+    g.appendChild(el);
+  });
+}
+function updEnq(){
+  var k=Object.keys(sel);$('#enq-n').textContent=k.length;$('#enq').classList.toggle('show',k.length>0);
+  $('#enq-send').href='https://wa.me/'+WA+'?text='+encodeURIComponent('Hi Ruini Beauty Nest, I would like to enquire about:\n'+k.map(function(x){return '- '+x}).join('\n'));
+}
+renderShop();
+
+/* ---------- booking ---------- */
+var slots=['10:00 AM','11:30 AM','1:00 PM','3:00 PM','4:30 PM','6:00 PM'],slot='';
+var sb=$('#slots');
+slots.forEach(function(s){var b=document.createElement('button');b.type='button';b.className='slot';b.textContent=s;b.setAttribute('aria-pressed','false');b.onclick=function(){slot=s;$$('.slot').forEach(function(x){x.setAttribute('aria-pressed',x===b)});upd()};sb.appendChild(b)});
+var di=$('#f-date');
+var t0=new Date();var iso=t0.getFullYear()+'-'+String(t0.getMonth()+1).padStart(2,'0')+'-'+String(t0.getDate()).padStart(2,'0');
+di.min=iso;di.value=iso;
+function upd(){
+  var name=$('#f-name').value.trim()||'a customer',sv=svcSel.value,d=di.value;
+  var nice=d?new Date(d+'T00:00:00').toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'}):'a date';
+  var msg='Hi Ruini Beauty Nest, I am '+name+'. I would like to book '+sv+' on '+nice+(slot?' at '+slot:'')+'. Please confirm.';
+  $('#sum').innerHTML='<b>'+sv+'</b><br>'+nice+(slot?' · '+slot:' · pick a time')+'<br><span style="color:var(--muted)">For '+name+'</span>';
+  $('#send').href='https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
+}
+[svcSel,di,$('#f-name')].forEach(function(e){e.addEventListener('input',upd)});
+$('#form').addEventListener('submit',function(e){e.preventDefault()});
+upd();
+
+/* ---------- tour strip + lightbox ---------- */
+[['neon.jpg','Facial room'],['bride.jpg','Bridal makeup'],['serum.jpg','Serums'],['neck.jpg','Jewellery wall'],['perfume.jpg','Perfumes'],['nails.jpg','Nail art'],['bangle.jpg','Bangles'],['polish.jpg','Nail colours']].forEach(function(p){
+  var b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Enlarge '+p[1]);b.innerHTML='<img src="'+p[0]+'" alt="'+p[1]+'">';b.onclick=function(){openLb(p[0],p[1])};$('#strip').appendChild(b);
+});
+function openLb(src,alt){$('#lb-img').src=src;$('#lb-img').alt=alt;$('#lb').hidden=false}
+function closeLb(){$('#lb').hidden=true}
+$('#lb').onclick=function(e){if(e.target!==$('#lb-img'))closeLb()};
+addEventListener('keydown',function(e){if(e.key==='Escape')closeLb()});
+
+/* ---------- copy number ---------- */
+$('#copyph').onclick=function(){
+  var b=this,txt=$('#ph').textContent;
+  function ok(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1600)}
+  function fb(){var r=document.createRange();r.selectNodeContents($('#ph'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected';setTimeout(function(){b.textContent='Copy'},1600)}
+  try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(e){fb()}
+};
+
+/* ---------- reveal + active nav ---------- */
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  $$('.rv').forEach(function(el,i){el.style.transitionDelay=(i%3)*90+'ms';io.observe(el)});
+  var secs=['home','offers','services','shop','book','visit'].map(function(id){return document.getElementById(id)});
+  var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){$$('#menu a').forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(function(s){if(s)so.observe(s)});
+}else{$$('.rv').forEach(function(el){el.classList.add('in')})}
+
+/* ---------- spotlight + tilt ---------- */
+document.addEventListener('mousemove',function(e){
+  var t=e.target.closest&&e.target.closest('.card,.offer,.svc');
+  if(t){var r=t.getBoundingClientRect();t.style.setProperty('--mx',(e.clientX-r.left)+'px');t.style.setProperty('--my',(e.clientY-r.top)+'px')}
+});
+(function(){
+  var h=$('.hero'),a=$('.arch');
+  if(!h||!a||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  h.addEventListener('mousemove',function(e){var r=h.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;a.style.setProperty('--ry',(x*10)+'deg');a.style.setProperty('--rx',(-y*8)+'deg')});
+  h.addEventListener('mouseleave',function(){a.style.setProperty('--ry','0deg');a.style.setProperty('--rx','0deg')});
+})();
+})();
+</script>
